@@ -1,9 +1,11 @@
 <h1>Hello {{name}}</h1>
+<h2>Welcome To {{college}}</h2>
 <hr>
 <p><b>Email : </b>{{email}}</p>
 <p><b>Address :</b>{{address.st}},{{address.city}},{{address.state}}</p>
 <hr>
-<button (click)="demoRequest()">Hello World</button>
+<button (click)="demoHello()">Hello World</button>
+<button (click)="demoJson()">Json</button>
 <button (click)="show()">{{showHobbies ? "hide" : "show"}} </button>
 <div *ngIf="showHobbies">
   <p><b>Hobbies :</b></p>
@@ -19,6 +21,7 @@
 <h4> Edit User </h4>
 <form>
   Name : <input type="text" name="name" [(ngModel)]="name"><br>
+  College : <input type="text" name="college" [(ngModel)]="college"><br>
    Email : <input type="text" name="email" [(ngModel)]="email"><br> 
     Street : <input type="text" name="address.st" [(ngModel)]="address.st"><br>
      city : <input type="text" name="address.city" [(ngModel)]="address.city"><br>
@@ -26,15 +29,24 @@
 </form>
 <hr><hr><hr>
 
-<form>
-  A : <input type="text" name="a" [(ngModel)]="a">
-  B : <input type="text" name="b" [(ngModel)]="b"> <button (click)="add()">ADD</button>
-  C : <input type="text" name="nc" [(ngModel)]="c">
+<form method="POST" action='/'>
+  A : <input type="text" name="a" [(ngModel)]="a" id="a" >
+  B : <input type="text" name="b" [(ngModel)]="b" id="b" > <button (click)="add()">ADD</button>
+ <!-- C : <input type="text" name="c" > -->
 </form>
 
+<h3>ANSWER</h3>
+<div *ngFor="let post of postsAns">
+  <p>{{post.Answer}}</p>
+</div>
+
 <h3>XXXXX</h3>
-<div *ngFor="let post of posts4">
-  <h3>{{post.a}}</h3>
+<div><table border=2>
+<tr *ngFor=" let post of posts4">
+    <td>{{post.College}}</td>
+    <td>{{post.Dept}}</td>
+</tr>
+</table>
 </div>
 
 <h3>Posts</h3>

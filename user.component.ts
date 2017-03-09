@@ -8,6 +8,7 @@ import { postsService } from '../services/posts.service';
     providers: [postsService]
 })
 export class UserComponent {
+    college: string;
     name: string;
     email: string;
     address: address;
@@ -20,9 +21,10 @@ export class UserComponent {
     b: number;
     c: number;
     posts4: Post[];
-
+    postsAns: Post[];
 
     constructor(private postsService: postsService) {
+        this.college = 'SIT';
         this.name = 'Meena';
         this.email = 'meena@gmail.com';
         this.address = {
@@ -32,23 +34,20 @@ export class UserComponent {
         }
         this.hobbies = ['music', 'singing'];
         this.showHobbies = false;
+        this.onloadJson();
+    }
 
-        this.postsService.getPosts1().subscribe(posts => {
+    onloadJson() {
+        this.postsService.getPlaceholderJson().subscribe(posts => {
             this.posts = posts;
         });
-
-         this.postsService.getPosts4().subscribe(posts => {
-            this.posts4 = posts;
-        });
-
-        this.postsService.getPosts2().subscribe(posts => {
+        this.postsService.getLocalJson().subscribe(posts => {
             //console.log(posts);
             this.posts123 = posts;
         });
 
-        
-
     }
+
     show() {
         if (this.showHobbies == true) {
             this.showHobbies = false;
@@ -56,24 +55,26 @@ export class UserComponent {
         else {
             this.showHobbies = true;
         }
-
     }
 
-    demoRequest() {
-        this.postsService.getposts().subscribe(response => {
+    demoHello() {
+        this.postsService.getHello().subscribe(response => {
             console.log(response["_body"]);
         });
-        this.postsService.getPosts4().subscribe(posts => {
+    }
+
+    demoJson() {
+        this.postsService.getJson().subscribe(posts => {
             this.posts4 = posts;
         });
-
     }
 
     add() {
-        //console.log(this.a);
-        //console.log(this.b);
-        this.postsService.getAdd(this.a, this.b);
-        // console.log(this.postsService.getPosts4());
+        this.c = this.a+this.b;
+        this.postsService.getAdd(this.a, this.b).subscribe(response => {
+            console.log(this.c);
+            console.log(response);
+        });
     }
 
     addHobby(hobby: any) {
@@ -85,8 +86,8 @@ export class UserComponent {
         this.hobbies.splice(i, 1);
         //  this.hobbies.pop(i);
     }
-
 }
+
 interface address {
     st: string;
     city: string;
@@ -104,8 +105,13 @@ interface Post123 {
     Age: number;
 }
 
-interface posts4 {
-    a: number;
+interface post4 {
+    College: string;
+    Dept: string;
+}
+
+interface postsAns{
+    Answer: number;
 }
 
 interface body {
